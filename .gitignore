@@ -1,3 +1,5 @@
 *.exe
 *.pdb
 __pycache__
+
+rust_tester/target
