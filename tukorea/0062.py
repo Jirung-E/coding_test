@@ -1,7 +1,5 @@
 from typing import List, Dict
 
-N = int(input())
-
 class Music:
     def __init__(self, id: int, play: int):
         self.id = id
@@ -16,6 +14,9 @@ class Album:
         self.music.append(music)
         self.accumulated_play += music.play
 
+
+N = int(input())
+
 album: Dict[str, Album] = {}
 for num in range(N):
     genre, play = input().split()
@@ -29,13 +30,3 @@ for i in range(2):
     for music in sorted(album[genre].music, key=lambda x: x.play, reverse=True)[:2]:
         print(music.id)
     del album[genre]
-
-
-# 7
-# pop 10
-# pop 20
-# pop 30
-# pop 10
-# pop 20
-# pop 10
-# classic 100
