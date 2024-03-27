@@ -25,7 +25,7 @@ for num in range(N):
         album[genre] = Album()
     album[genre].add(Music(num, int(play)))
 
-for i in range(2):
+while album:
     genre = max(album, key=lambda k: album[k].accumulated_play)
     for music in sorted(album[genre].music, key=lambda x: x.play, reverse=True)[:2]:
         print(music.id)
