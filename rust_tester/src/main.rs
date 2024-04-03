@@ -1,49 +1,20 @@
 fn main() {
-    let line1 = input().split_whitespace()
-        .map(|x| x.parse::<u32>().unwrap())
-        .collect::<Vec<_>>();
+    let args = input().split_whitespace()
+        .map(|x| x.parse::<usize>().unwrap()).collect::<Vec<_>>();
+    let len = args[0];
+    let lines = args[1];
 
-    let base = line1[0];
-    let _count1 = line1[1];
-    let _count2 = line1[2];
+    for _ in 0..lines {
+        let list = input().split_whitespace()
+            .map(|x| x.parse::<u32>().unwrap())
+            .collect::<Vec<_>>();
 
-    let num1 = input().split_whitespace()
-        .map(|x| x.parse::<u32>().unwrap())
-        .collect::<Vec<_>>();
+        assert_eq!(len, list.len());
 
-    let num2 = input().split_whitespace()
-        .map(|x| x.parse::<u32>().unwrap())
-        .collect::<Vec<_>>();
-
-    let num1 = to_decimal(base, &num1);
-    let num2 = to_decimal(base, &num2);
-
-    let result = decimal_to_base_list(base, num1*num2);
-    println!("{}", result.len());
-    for n in result {
-        print!("{} ", n);
+        println!("{:?}", next_permutation(&list));
     }
 }
 
-
-fn to_decimal(base: u32, number_list: &Vec<u32>) -> u32 {
-    let mut result = 0;
-    for (i, num) in number_list.iter().rev().enumerate() {
-        result += num * (base.pow(i as u32));
-    }
-    result
-}
-
-fn decimal_to_base_list(base: u32, number: u32) -> Vec<u32> {
-    let mut v = Vec::new();
-    let mut number = number;
-    while number >= base {
-        v.insert(0, number % base);
-        number /= base
-    }
-    v.insert(0, number);
-    v
-}
 
 fn input() -> String {
     let mut buf = String::new();
@@ -51,4 +22,24 @@ fn input() -> String {
         .read_line(&mut buf)
         .unwrap();
     buf
+}
+
+
+fn next_permutation(list: &Vec<u32>) -> Vec<u32> {
+    let mut result = list.clone();
+    let len = list.len();
+
+    for i in (1..len).rev() {
+        if list[i-1] < list[i] {
+            let mut s = list[i-1..].to_vec();
+            s.sort();
+            let k = s.iter().find(|x| **x == list[i-1]).unwrap();
+            let number = s.remove((k+1) as usize);
+            s.insert(0, number);
+            result = Vec::from(&list[..i-1]).append(s);
+            break;
+        }
+    }
+
+    result
 }
