@@ -9,16 +9,20 @@ def dayStrToDays(day: str) -> int:
 def solution(today: str, terms: List[str], privacies: List[str]):
     today = dayStrToDays(today)
     
+    terms_dict = {}
+    for term in terms:
+        t = term.split()
+        terms_dict[t[0]] = int(t[1])
 
     answer = []
 
-    for privacy in privacies:
+    for i, privacy in enumerate(privacies):
         p = privacy.split()
         start_date = dayStrToDays(p[0])
-        
+        if start_date + terms_dict[p[1]]*28 <= today:
+            answer.append(i+1)
 
     return answer
-
 
 assert [1, 3] == solution(
     "2022.05.19",
