@@ -18,8 +18,7 @@ def solution(today: str, terms: List[str], privacies: List[str]):
 
     for i, privacy in enumerate(privacies):
         p = privacy.split()
-        start_date = dayStrToDays(p[0])
-        if start_date + terms_dict[p[1]]*28 <= today:
+        if dayStrToDays(p[0]) + terms_dict[p[1]]*28 <= today:
             answer.append(i+1)
 
     return answer
